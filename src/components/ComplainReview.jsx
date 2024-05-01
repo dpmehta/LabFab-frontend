@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 const ComplainReview = () => {
   const [componentComplaints, setComponentComplaints] = useState([]);
   const [computerComplaints, setComputerComplaints] = useState([]);
@@ -9,34 +10,66 @@ const ComplainReview = () => {
     setActiveOption(option);
   };
 
-  useEffect(() => {
-    const fetchComponentComplaints = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/complaints/component-complaint"
-        );
-        setComponentComplaints(response.data.componentComplaints);
-        setComputerComplaints([]);
-      } catch (error) {
-        console.error("Error fetching component issues:", error);
-      }
-    };
+  const fetchComponentComplaints = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/complaints/component-complaint"
+      );
+      setComponentComplaints(response.data.componentComplaints);
+      setComputerComplaints([]);
+    } catch (error) {
+      console.error("Error fetching component issues:", error);
+    }
+  };
 
-    const fetchComputerComplaints = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/computer-complaints/computer-complaint"
-        );
-        setComputerComplaints(response.data.computerComplaints);
-        setComponentComplaints([]);
-      } catch (error) {
-        console.error("Error fetching component issues:", error);
-      }
-    };
+  const fetchComputerComplaints = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/computer-complaints/computer-complaint"
+      );
+      setComputerComplaints(response.data.computerComplaints);
+      setComponentComplaints([]);
+    } catch (error) {
+      console.error("Error fetching component issues:", error);
+    }
+  };
+
+  useEffect(() => {
     activeOption === "Component"
       ? fetchComponentComplaints()
       : fetchComputerComplaints();
   }, [activeOption]);
+
+  const handleResolve = async (id) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/complaints/updateStatus",
+        {
+          id: id,
+          status: "resolved",
+        }
+      );
+      if (response.data.success) {
+        toast.success(" Complaint Resolved ", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
+
+        activeOption === "Component"
+          ? fetchComponentComplaints()
+          : fetchComputerComplaints();
+      }
+    } catch (error) {
+      console.error("Error resolving complaint:", error);
+    }
+  };
 
   return (
     <>
@@ -95,6 +128,12 @@ const ComplainReview = () => {
                 <p className="block text-base antialiased font-light leading-relaxed text-inherit">
                   GR Number : {componentComplaint.studentToken.grNumber}{" "}
                 </p>
+                <button
+                  className="mt-4 w-25 px-2 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"
+                  onClick={() => handleResolve(componentComplaint._id)} // Replace handleResolve with your function to handle resolve action
+                >
+                  Resolve
+                </button>
               </div>
 
               <div className="p-6 flex justify-end items-center">
