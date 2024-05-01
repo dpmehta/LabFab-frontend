@@ -33,7 +33,6 @@ function App() {
           <Route path="/request-show" element={<RequestShow />} />
           <Route exact path="/component-page/:id" element={<ComponentPage />} />
           <Route exact path="/qr-reader" element={<QrReader />} />
-          <Route exact path="/request" element={<RequestShow />} />
           <Route exact path="/add-component" element={<AddComponent />} />
           <Route
             exact

@@ -24,6 +24,31 @@ const LabEntryOverview = () => {
     item.labCode.toLowerCase().includes(searchLabNumber.toLowerCase())
   );
 
+  const getDateFromTimestamp = (myTimestamp) => {
+    const date = new Date(myTimestamp);
+
+    date.setHours(date.getHours() + 5); // Adjusting for IST timezone
+    date.setMinutes(date.getMinutes() + 30);
+
+    const indianDate = date.toLocaleDateString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      dateStyle: "long", // Adjust date style as per your requirement
+    });
+
+    return indianDate;
+  };
+
+  const getTimeFromTimestamp = (myTimestamp) => {
+    const date = new Date(myTimestamp);
+
+    const indianTime = date.toLocaleTimeString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      timeStyle: "long",
+    });
+
+    return indianTime;
+  };
+
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -39,6 +64,9 @@ const LabEntryOverview = () => {
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                   Purpose
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Date
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                   Entry Time
@@ -70,11 +98,14 @@ const LabEntryOverview = () => {
                       {labEntry.purpose}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {" "}
-                      {labEntry.entryTime}
+                      {getDateFromTimestamp(labEntry.entryTime)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {labEntry.leaveTime}
+                      {" "}
+                      {getTimeFromTimestamp(labEntry.entryTime)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {getTimeFromTimestamp(labEntry.leaveTime)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {labEntry.labCode}
