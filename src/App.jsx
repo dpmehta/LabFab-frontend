@@ -19,6 +19,7 @@ import ComplainReview from "./components/ComplainReview";
 import LabEntryOverview from "./components/LabEntryOverview";
 import LabAvailability from "./components/LabAvailability";
 import LabLogin from "./components/LabLogin";
+import AdminElement from "./components/AdminElement";
 
 function App() {
   return (
@@ -43,7 +44,15 @@ function App() {
           <Route exact path="/lab-overview" element={<LabOverview />} />
           <Route exact path="/lab-detail/:id" element={<LabDetail />} />
           <Route exact path="/complaint" element={<Complaint />} />
-          <Route exact path="/dead-stock" element={<DeadStock />} />
+          <Route
+            exact
+            path="/dead-stock"
+            element={
+              <AdminElement>
+                <DeadStock />
+              </AdminElement>
+            }
+          />
           <Route exact path="/complaint-review" element={<ComplainReview />} />
           <Route exact path="/lab-login" element={<LabLogin />} />
           <Route

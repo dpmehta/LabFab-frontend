@@ -5,7 +5,6 @@ import QrScanner from "qr-scanner";
 import QrFrame from "../assets/images/qr-frame.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import NavBar from "./NavBar";
 
 const LabEntry = () => {
   const scanner = useRef(null);

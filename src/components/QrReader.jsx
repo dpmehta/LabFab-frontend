@@ -67,7 +67,6 @@ const QrReader = () => {
       });
 
       const data = await response.json();
-      console.log(data.error);
 
       if (data.success) {
         localStorage.setItem("currentUser", data.currentUser.gr_no);
