@@ -18,6 +18,7 @@ import DeadStock from "./components/DeadStock";
 import ComplainReview from "./components/ComplainReview";
 import LabEntryOverview from "./components/LabEntryOverview";
 import LabAvailability from "./components/LabAvailability";
+import LabLogin from "./components/LabLogin";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route exact path="/complaint" element={<Complaint />} />
           <Route exact path="/dead-stock" element={<DeadStock />} />
           <Route exact path="/complaint-review" element={<ComplainReview />} />
+          <Route exact path="/lab-login" element={<LabLogin />} />
           <Route
             exact
             path="/lab-entry-review"

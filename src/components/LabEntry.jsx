@@ -12,7 +12,8 @@ const LabEntry = () => {
   const videoEl = useRef(null);
   const qrBoxEl = useRef(null);
   const [qrOn, setQrOn] = useState(true);
-  const navigate = useNavigate();
+  const labNumber = localStorage.getItem("labNumber");
+  const naviagte = useNavigate();
 
   const [scannedResult, setScannedResult] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +25,6 @@ const LabEntry = () => {
   };
 
   const onScanSuccess = async (result) => {
-
     let decideFlag = true;
     const grNumber = result?.data.split("~")[0];
     setScannedResult(grNumber);
@@ -124,7 +124,7 @@ const LabEntry = () => {
           leaveTime: new Date().toISOString(),
           purpose: purpose,
           isActive: true,
-          labCode: "MA115",
+          labCode: labNumber,
         }
       );
 
@@ -150,82 +150,105 @@ const LabEntry = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("labNumber");
+    naviagte("/");
+  };
+
   return (
     <>
-      <NavBar />
-      <h1 className="lab-entry-heading"> Scan ID Card To Lab Entry </h1>
-      <div className="qr-reader">
-        <video ref={videoEl}></video>
-        <div ref={qrBoxEl} className="qr-box">
-          <img
-            src={QrFrame}
-            alt="Qr Frame"
-            width={256}
-            height={256}
-            className="qr-frame"
-          />
+      <div className="bg-blue-300 h-screen flex flex-col justify-center items-center text-white">
+        <h1 className="m-0 py-2 lab-entry-heading text-center">
+          Welcome To ICT MU Labs
+        </h1>
+        <div className="flex justify-between w-full px-4">
+          <h2 className="text-2xl text-center mb-0">
+            Scan ID Card To Add Your Lab Entry
+          </h2>
+          {labNumber && (
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="btn btn-info mb-3"
+            >
+              Logout
+            </button>
+          )}
         </div>
 
-        {scannedResult && (
-          <p
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              zIndex: 99999,
-              color: "white",
-            }}
-          >
-            Scanned Result: {scannedResult}
-          </p>
-        )}
-      </div>
+        <div className="qr-reader ">
+          <video ref={videoEl}></video>
+          <div ref={qrBoxEl} className="qr-box">
+            <img
+              src={QrFrame}
+              alt="Qr Frame"
+              width={256}
+              height={256}
+              className="qr-frame"
+            />
+          </div>
 
-      {showLeaveModal && (
-        <div className="leave-entry-modal">
-          <div className="leave-entry-modal-content">
-            <h2>Leave Entry</h2>
-            <div className="leave-entry-message">
-              <p>Are you sure you want to leave the lab?</p>
-              <div className="button-container">
-                <button className="leave-button" onClick={handleLeaveLab}>
-                  Leave
-                </button>
-                <button className="close-button" onClick={handleClose}>
-                  Close
-                </button>
+          {scannedResult && (
+            <p
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                zIndex: 99999,
+                color: "white",
+              }}
+            >
+              Scanned Result: {scannedResult}
+            </p>
+          )}
+        </div>
+
+        {showLeaveModal && (
+          <div className="leave-entry-modal">
+            <div className="leave-entry-modal-content">
+              <h2>Leave Entry</h2>
+              <div className="leave-entry-message">
+                <p>Are you sure you want to leave the lab?</p>
+                <div className="button-container">
+                  <button className="leave-button" onClick={handleLeaveLab}>
+                    Leave
+                  </button>
+                  <button className="close-button" onClick={handleClose}>
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {showModal && (
-        <div className="lab-entry-modal">
-          <div className="lab-entry-modal-content">
-            <h2>Enter Purpose</h2>
-            <div className="lab-entry-form-group">
-              <label className="purpose-label" htmlFor="purpose">
-                Purpose:
-              </label>
-              <select
-                id="purpose"
-                value={purpose}
-                onChange={handlePurposeChange}
-              >
-                <option value="">Select Purpose</option>
-                <option value="project work">Project Work</option>
-                <option value="exam reading">Exam Reading</option>
-                <option value="assignment">Assignment</option>
-                <option value="other work">Other Work</option>
-              </select>
+        {showModal && (
+          <div className="lab-entry-modal">
+            <div className="lab-entry-modal-content">
+              <h2>Enter Purpose</h2>
+              <div className="lab-entry-form-group">
+                <label className="purpose-label" htmlFor="purpose">
+                  Purpose:
+                </label>
+                <select
+                  id="purpose"
+                  value={purpose}
+                  onChange={handlePurposeChange}
+                >
+                  <option value="">Select Purpose</option>
+                  <option value="project work">Project Work</option>
+                  <option value="exam reading">Exam Reading</option>
+                  <option value="assignment">Assignment</option>
+                  <option value="other work">Other Work</option>
+                </select>
+              </div>
+              <button className="lab-entry-button" onClick={handleSubmit}>
+                Submit
+              </button>
             </div>
-            <button className="lab-entry-button" onClick={handleSubmit}>
-              Submit
-            </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };
