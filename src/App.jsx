@@ -7,7 +7,6 @@ import SignUp from "./components/SignUp";
 import ComponentPage from "./components/ComponentPage";
 import RequestShow from "./components/RequestShow";
 import QrReader from "./components/QrReader";
-import Labs from "./components/Labs";
 import LabEntry from "./components/LabEntry";
 import { Toaster } from "react-hot-toast";
 import ComponentReview from "./components/ComponentReview";
@@ -18,6 +17,7 @@ import Complaint from "./components/Complaint";
 import DeadStock from "./components/DeadStock";
 import ComplainReview from "./components/ComplainReview";
 import LabEntryOverview from "./components/LabEntryOverview";
+import LabAvailability from "./components/LabAvailability";
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
           <Route path="/" element={<SignUp />} />
           <Route path="/home" element={<HomeMain />} />
           <Route path="/component-issue" element={<ComponentIssue />} />
-          <Route path="/labs" element={<Labs />} />
+          <Route path="/lab-availability" element={<LabAvailability />} />
           <Route path="/lab-entry" element={<LabEntry />} />
           <Route path="/request-show" element={<RequestShow />} />
           <Route exact path="/component-page/:id" element={<ComponentPage />} />

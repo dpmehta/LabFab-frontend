@@ -9,7 +9,7 @@ export default defineConfig({
       allow: [
         "E:/Lab Portal/lab-portal-backend/assets/images/component-complaint-images",
         "E:/Lab Portal/lab-portal-backend/assets/images/computer-complaint-images",
-        "E:/Lab Portal/Lab-Portal/src",
+        "E:/Project-AWT/LabFab/frontend/src",
       ],
     },
   },
