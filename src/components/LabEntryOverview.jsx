@@ -3,26 +3,23 @@ import axios from "axios";
 
 const LabEntryOverview = () => {
   const [labEntries, setLabEntries] = useState([]);
-  const [searchLabNumber, setSearchLabNumber] = useState("MA115");
+  const [searchLabNumber, setSearchLabNumber] = useState("All");
+
+  const fetchLabEntries = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/lab-entries/getAll"
+      );
+      setLabEntries(response.data.labEntries);
+    } catch (error) {
+      console.error("Error fetching lab entries:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchLabEntries = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/lab-entries/getAll"
-        );
-        setLabEntries(response.data.labEntries);
-      } catch (error) {
-        console.error("Error fetching lab entries:", error);
-      }
-    };
-
+    setSearchLabNumber("");
     fetchLabEntries();
   }, []);
-
-  const filteredData = labEntries.filter((item) =>
-    item.labCode.toLowerCase().includes(searchLabNumber.toLowerCase())
-  );
 
   const getDateFromTimestamp = (myTimestamp) => {
     const date = new Date(myTimestamp);
@@ -47,6 +44,21 @@ const LabEntryOverview = () => {
     });
 
     return indianTime;
+  };
+
+  const handleSearchChange = (e) => {
+    const inputValue = e.target.value;
+    setSearchLabNumber(inputValue);
+
+    if (inputValue === "") {
+      fetchLabEntries();
+    }
+
+    const filteredData = labEntries.filter((item) =>
+      item.labCode.toLowerCase().includes(searchLabNumber.toLowerCase())
+    );
+
+    setLabEntries(filteredData);
   };
 
   return (
@@ -80,14 +92,14 @@ const LabEntryOverview = () => {
                     type="text"
                     className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Search by Lab No."
-                    value={searchLabNumber}
-                    onChange={(e) => setSearchLabNumber(e.target.value)}
+                    value={searchLabNumber === "" ? "" : searchLabNumber}
+                    onChange={handleSearchChange}
                   />
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredData.map((labEntry, index) => {
+              {labEntries.map((labEntry, index) => {
                 return (
                   <tr key={labEntry._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
