@@ -20,6 +20,7 @@ import LabEntryOverview from "./components/LabEntryOverview";
 import LabAvailability from "./components/LabAvailability";
 import LabLogin from "./components/LabLogin";
 import AdminElement from "./components/AdminElement";
+import StudentElement from "./components/StudentElement";
 
 function App() {
   return (
@@ -28,22 +29,101 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<SignUp />} />
-          <Route path="/home" element={<HomeMain />} />
-          <Route path="/component-issue" element={<ComponentIssue />} />
-          <Route path="/lab-availability" element={<LabAvailability />} />
-          <Route path="/lab-entry" element={<LabEntry />} />
-          <Route path="/request-show" element={<RequestShow />} />
-          <Route exact path="/component-page/:id" element={<ComponentPage />} />
+          <Route
+            path="/home"
+            element={
+              <StudentElement>
+                <HomeMain />
+              </StudentElement>
+            }
+          />
+          <Route
+            path="/component-issue"
+            element={
+              <StudentElement>
+                <ComponentIssue />
+              </StudentElement>
+            }
+          />
+          <Route
+            path="/lab-availability"
+            element={
+              <StudentElement>
+                <LabAvailability />
+              </StudentElement>
+            }
+          />
+          <Route
+            path="/lab-entry"
+            element={
+              <AdminElement>
+                <LabEntry />
+              </AdminElement>
+            }
+          />
+          <Route
+            path="/request-show"
+            element={
+              <StudentElement>
+                <RequestShow />
+              </StudentElement>
+            }
+          />
+          <Route
+            exact
+            path="/component-page/:id"
+            element={
+              <StudentElement>
+                <ComponentPage />
+              </StudentElement>
+            }
+          />
           <Route exact path="/qr-reader" element={<QrReader />} />
-          <Route exact path="/add-component" element={<AddComponent />} />
+          <Route
+            exact
+            path="/add-component"
+            element={
+              <AdminElement>
+                <AddComponent />
+              </AdminElement>
+            }
+          />
           <Route
             exact
             path="component-request-review"
-            element={<ComponentReview />}
+            element={
+              <AdminElement>
+                <ComponentReview />
+              </AdminElement>
+            }
           />
-          <Route exact path="/lab-overview" element={<LabOverview />} />
-          <Route exact path="/lab-detail/:id" element={<LabDetail />} />
-          <Route exact path="/complaint" element={<Complaint />} />
+          <Route
+            exact
+            path="/lab-overview"
+            element={
+              <StudentElement>
+                <LabOverview />
+              </StudentElement>
+            }
+          />
+          <Route
+            exact
+            path="/lab-detail/:id"
+            element={
+              <StudentElement>
+                <LabDetail />
+              </StudentElement>
+            }
+          />
+          <Route
+            exact
+            path="/complaint"
+            element={
+              <StudentElement>
+                <Complaint />
+              </StudentElement>
+            }
+          />
           <Route
             exact
             path="/dead-stock"
@@ -53,12 +133,24 @@ function App() {
               </AdminElement>
             }
           />
-          <Route exact path="/complaint-review" element={<ComplainReview />} />
+          <Route
+            exact
+            path="/complaint-review"
+            element={
+              <AdminElement>
+                <ComplainReview />
+              </AdminElement>
+            }
+          />
           <Route exact path="/lab-login" element={<LabLogin />} />
           <Route
             exact
             path="/lab-entry-review"
-            element={<LabEntryOverview />}
+            element={
+              <AdminElement>
+                <LabEntryOverview />
+              </AdminElement>
+            }
           />
         </Routes>
         <Toaster position="top-center" reverseOrder={false} />
