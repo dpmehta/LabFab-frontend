@@ -17,7 +17,7 @@ const LabEntryOverview = () => {
   };
 
   useEffect(() => {
-    setSearchLabNumber("");
+    console.log("hu devlo " + searchLabNumber);
     fetchLabEntries();
   }, []);
 
@@ -61,6 +61,14 @@ const LabEntryOverview = () => {
     setLabEntries(filteredData);
   };
 
+  const renderLeaveTime = (entryTime, leaveTime) => {
+    if (entryTime === leaveTime) {
+      return "-";
+    } else {
+      return getTimeFromTimestamp(leaveTime);
+    }
+  };
+
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -96,6 +104,9 @@ const LabEntryOverview = () => {
                     onChange={handleSearchChange}
                   />
                 </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Active Status
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -117,10 +128,19 @@ const LabEntryOverview = () => {
                       {getTimeFromTimestamp(labEntry.entryTime)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {getTimeFromTimestamp(labEntry.leaveTime)}
+                      {renderLeaveTime(labEntry.entryTime, labEntry.leaveTime)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {labEntry.labCode}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="h-3 w-3 inline-block rounded-full mr-1 bg-green-500 animate-pulse"></span>
+
+                      {labEntry.isActive ? (
+                        <span className="h-3 w-3 inline-block rounded-full bg-green-500"></span>
+                      ) : (
+                        <span className="h-3 w-3 inline-block rounded-full bg-red-500"></span>
+                      )}
                     </td>
                   </tr>
                 );
