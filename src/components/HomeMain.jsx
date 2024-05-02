@@ -25,6 +25,7 @@ export default function HomeMain() {
   const [loading, setLoading] = useState(true);
 
   const fetchDataFromFirestore = async () => {
+    setLoading(true);
     try {
       const querySnapshot = await getDocs(collection(db, "resource-details"));
       const tmparray = [];
@@ -44,30 +45,6 @@ export default function HomeMain() {
     fetchDataFromFirestore();
   }, []);
 
-  const searchFirestore = async (field, value) => {
-    const db = getFirestore(); // Initialize Firestore
-    let results = [];
-
-    try {
-      // Create a Firestore query based on the provided field and value
-      const q = query(
-        collection(db, "resource-details"),
-        where(field, "==", value)
-      );
-      const querySnapshot = await getDocs(q);
-
-      // Iterate over the query snapshot and extract the data
-      querySnapshot.forEach((doc) => {
-        results.push({ id: doc.id, ...doc.data() });
-      });
-      console.log(results);
-
-      setStoredValues(results);
-    } catch (error) {
-      console.error("Error searching Firestore:", error);
-    }
-  };
-
   // Options for the first dropdown
   const firstDropdownOptions = [
     { label: "Name" },
@@ -86,13 +63,15 @@ export default function HomeMain() {
     switch (selectedOption.label) {
       case "location":
         setSecondDropdownOptions([
+          { label: "All" },
           { label: "MA109" },
-          { label: "MA108" },
+          { label: "MA103" },
           { label: "MA107" },
         ]);
         break;
       case "Faculty":
         setSecondDropdownOptions([
+          { label: "All" },
           { label: "Faculty Of Technology" },
           { label: "Faculty Of Engineering" },
           { label: "Faculty Of Management" },
@@ -100,6 +79,7 @@ export default function HomeMain() {
         break;
       case "Department":
         setSecondDropdownOptions([
+          { label: "All" },
           { label: "Information and Communication Technology" },
           { label: "Computer Engineering" },
           { label: "Information Technology" },
@@ -107,6 +87,7 @@ export default function HomeMain() {
         break;
       case "Lab-Name":
         setSecondDropdownOptions([
+          { label: "All" },
           { label: "Microprocessor and Microcontroller Lab" },
           { label: "IOT and Com. Lab" },
           { label: "Web Development Lab" },
@@ -115,6 +96,38 @@ export default function HomeMain() {
 
       default:
         setSecondDropdownOptions([]);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setSearchQuery(inputValue);
+
+    if (inputValue === "") {
+      setStoredValues([]);
+      fetchDataFromFirestore();
+      return;
+    }
+
+    const filtered = storedValues.filter((storedValue) =>
+      storedValue.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setStoredValues(filtered);
+  };
+
+  const handleSecondDropdownChange = (selectedOption) => {
+    setSecondDropdownValue(selectedOption);
+    setLoading(true);
+    if (selectedOption.label === "All") {
+      fetchDataFromFirestore();
+    } else {
+      const filtered = storedValues.filter((storedValue) =>
+        storedValue[firstDropdownValue.label]
+          .toLowerCase()
+          .includes(selectedOption.label.toLowerCase())
+      );
+      setStoredValues(filtered);
+      setLoading(false);
     }
   };
 
@@ -135,9 +148,7 @@ export default function HomeMain() {
                   : " Search by Name ..."
               }
               disabled={isSearchInputDisabled}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-              }}
+              onChange={handleInputChange}
             />
             <svg
               version="1.1"
@@ -167,40 +178,9 @@ export default function HomeMain() {
             <DropDown
               label="Options"
               options={secondDropdownOptions}
-              onChange={(selectedOption) => {
-                setSecondDropdownValue(selectedOption);
-              }}
+              onChange={handleSecondDropdownChange}
             />
           </div>
-          <button
-            onClick={() => {
-              if (firstDropdownValue && secondDropdownValue) {
-                searchFirestore(
-                  firstDropdownValue.label,
-                  secondDropdownValue.label
-                );
-              } else if (searchQuery) {
-                console.log(searchQuery);
-                searchFirestore("name", searchQuery);
-              }
-            }}
-            className="group relative overflow-hidden bg-blue-600 focus:ring-4 focus:ring-blue-300 inline-flex items-center px-7 py-2.5 rounded-lg text-white justify-center w-40 h-10"
-          >
-            Search
-            <svg
-              className="z-40 ml-2 -mr-1 w-3 h-3 transition-all duration-300 group-hover:translate-x-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <div className="absolute inset-0 h-[200%] w-[200%] rotate-45 translate-x-[-70%] transition-all group-hover:scale-100 bg-white/30 group-hover:translate-x-[50%] z-20 duration-1000"></div>
-          </button>
         </div>
       </div>
       <h1 className="equipment-heading">
