@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     fs: {
       allow: [
-        "E:/Lab Portal/lab-portal-backend/assets/images/component-complaint-images",
-        "E:/Lab Portal/lab-portal-backend/assets/images/computer-complaint-images",
+        "E:/Project-AWT/LabFab/backend/assets/images/component-complaint-images",
+        "E:/Project-AWT/LabFab/backend/assets/images/computer-complaint-images",
         "E:/Project-AWT/LabFab/frontend/src",
       ],
     },
