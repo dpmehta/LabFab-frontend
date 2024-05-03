@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import AdminNavbar from "./Faculty/AdminNavbar";
+import NavBar from "./NavBar";
 const ComplainReview = () => {
   const [componentComplaints, setComponentComplaints] = useState([]);
   const [computerComplaints, setComputerComplaints] = useState([]);
   const [activeOption, setActiveOption] = useState("Component");
+  const isAdminLoggedIn = localStorage.getItem("adminLogin");
+  const grNumber = localStorage.getItem("currentUser");
 
   const handleOptionClick = (option) => {
     setActiveOption(option);
   };
-
   const fetchComponentComplaints = async () => {
+    const url = isAdminLoggedIn
+      ? "http://localhost:3000/api/complaints/component-complaint"
+      : "http://localhost:3000/api/complaints/getStudentComplaint";
+
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/complaints/component-complaint"
-      );
-      setComponentComplaints(response.data.componentComplaints);
+      let response;
+      if (isAdminLoggedIn) {
+        response = await axios.get(url);
+        setComponentComplaints(response.data.componentComplaints);
+      } else {
+        response = await axios.post(url, { grNumber: grNumber });
+        setComponentComplaints(response.data.studentComplaints);
+      }
+
       setComputerComplaints([]);
     } catch (error) {
       console.error("Error fetching component issues:", error);
@@ -23,11 +35,18 @@ const ComplainReview = () => {
   };
 
   const fetchComputerComplaints = async () => {
+    const url = isAdminLoggedIn
+      ? "http://localhost:3000/api/computer-complaints/computer-complaint"
+      : "http://localhost:3000/api/computer-complaints/getStudentComplaint";
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/computer-complaints/computer-complaint"
-      );
-      setComputerComplaints(response.data.computerComplaints);
+      let response;
+      if (isAdminLoggedIn) {
+        response = await axios.get(url);
+        setComputerComplaints(response.data.computerComplaints);
+      } else {
+        response = await axios.post(url, { grNumber: grNumber });
+        setComputerComplaints(response.data.studentComplaints);
+      }
       setComponentComplaints([]);
     } catch (error) {
       console.error("Error fetching component issues:", error);
@@ -73,6 +92,8 @@ const ComplainReview = () => {
 
   return (
     <>
+      {isAdminLoggedIn ? <AdminNavbar /> : <NavBar />}
+
       <div className="relative max-w-md mx-auto mt-3">
         <div className="overflow-hidden bg-gray-200 pb-3 pr-3 pl-3 shadow-md">
           <div className="flex justify-around">
@@ -81,7 +102,7 @@ const ComplainReview = () => {
                 key={option}
                 className={`w-1/4 py-2 text-center font-medium text-sm ${
                   activeOption === option
-                    ? "text-white bg-blue-500"
+                    ? "text-white"
                     : "text-gray-600 bg-transparent"
                 } focus:outline-none`}
                 onClick={() => handleOptionClick(option)}
@@ -128,22 +149,24 @@ const ComplainReview = () => {
                 <p className="block text-base antialiased font-light leading-relaxed text-inherit">
                   GR Number : {componentComplaint.studentToken.grNumber}{" "}
                 </p>
-                <button
-                  className="mt-4 w-25 px-2 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"
-                  onClick={() => handleResolve(componentComplaint._id)} // Replace handleResolve with your function to handle resolve action
-                >
-                  Resolve
-                </button>
+                {isAdminLoggedIn && (
+                  <button
+                    className="mt-4 w-25 px-2 py-2 text-white rounded-lg shadow-md transition duration-300 ease-in-out"
+                    onClick={() => handleResolve(componentComplaint._id)} // Replace handleResolve with your function to handle resolve action
+                  >
+                    Resolve
+                  </button>
+                )}
               </div>
 
               <div className="p-6 flex justify-end items-center">
                 <img
                   src={
-                    "http://localhost:5173/@fs/E:/Lab%20Portal/lab-portal-backend/" +
+                    "http://localhost:5173/@fs/E:/Project-AWT/LabFab/backend/" +
                     componentComplaint.imageUpload
                   }
                   alt="Placeholder"
-                  className="h-48 sm:h-64 w-48 sm:w-56 object-cover"
+                  className="h-48 sm:h-64 w-58 sm:w-56 object-cover"
                 />
               </div>
             </div>
@@ -185,12 +208,20 @@ const ComplainReview = () => {
                 <p className="block text-base antialiased font-light leading-relaxed text-inherit">
                   Status : {computerComplaint.status}
                 </p>
+                {isAdminLoggedIn && (
+                  <button
+                    className="mt-4 w-25 px-2 py-2 text-white rounded-lg shadow-md transition duration-300 ease-in-out"
+                    onClick={() => handleResolve(computerComplaint._id)} // Replace handleResolve with your function to handle resolve action
+                  >
+                    Resolve
+                  </button>
+                )}
               </div>
 
               <div className="p-6 flex justify-end items-center">
                 <img
                   src={
-                    "http://localhost:5173/@fs/E:/Lab%20Portal/lab-portal-backend/" +
+                    "http://localhost:5173/@fs/E:/Project-AWT/LabFab/backend/" +
                     computerComplaint.imageUpload
                   }
                   alt="Placeholder"
