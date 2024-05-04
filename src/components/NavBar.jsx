@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 import MuLogo from "../assets/images/mu-logo.png";
 import IctLogo from "../assets/images/ictlogo.png";
+import { useState } from "react";
 
 export default function NavBar() {
   const user = localStorage.getItem("currentUser");
@@ -13,60 +14,123 @@ export default function NavBar() {
     localStorage.removeItem("isLoggedIn");
     navigate("/login");
   };
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  
   return (
     <>
-      <header className="header top-0 bg-white shadow-md flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 py-2 sticky top-0 z-50">
-        <img src={MuLogo} alt="logo" className="w-40 sm:mr-0" />
-
-        <nav className="nav ml-60 font-semibold text-lg flex-grow">
-          <ul className="flex items-center justify-center sm:justify-end">
-            <li className="p-3 b-2 flex-shrink-0">
-              <Link to="/home">Home</Link>
-            </li>
-            <li className="p-3 b-2 flex-shrink-0">
-              <Link to="/component-issue">Component Issue</Link>
-            </li>
-            <li className="p-3 b-2 flex-shrink-0">
-              <Link to="/lab-availability">Lab Availability</Link>
-            </li>
-            <li className="p-3 b-2 flex-shrink-0">
-              <Link to="/lab-overview">Lab Explore</Link>
-            </li>
-            <li className="p-3 b-2 flex-shrink-0">
-              <Link to="/request-show">My Requests</Link>
-            </li>
-
-            <li className="p-3 b-2 flex-shrink-0">
-              <Link to="/complaint">Add Complaint</Link>
-            </li>
-            <li className="p-3 b-2 flex-shrink-0">
-              <Link to="/complaint-review">My Complaints</Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="w-full sm:w-3/12 flex justify-center  sm:justify-end">
-          {isLoggedIn && (
+      <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-space ml-20">
+            <img src={MuLogo} className="h-12 mr-2" alt="MuLogo" />
+            <img
+              src={IctLogo}
+              alt="ICT"
+              id="ict-logo"
+            />
+          <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            {isLoggedIn && (
+              <button
+                type="button"
+                className="text-white  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mb-4"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            )}
+           
             <button
-              onClick={handleLogout}
               type="button"
-              className="btn btn-info mb-3 mr-3"
-              style={{
-                backgroundColor: "#14a2b9",
-                borderColor: "#14a2b9",
-                color: "white",
-              }}
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              onClick={toggleMenu}
             >
-              Logout
+              <span className="sr-only">Open main menu</span>
+              <svg
+                className="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 17 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M1 1h15M1 7h15M1 13h15"
+                />
+              </svg>
             </button>
-          )}
-          <img
-            src={IctLogo}
-            alt="ICT"
-            id="ict-logo"
-            className="w-30  lg:mr-30"
-          />
+          </div>
+          <div
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
+              isMenuOpen ? "" : "hidden"
+            }`}
+          >
+            <ul className="flex flex-col p-4 md:p-0  font-semibold  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+              <li>
+                <Link
+                  className="block py-2 text-gray-500 rounded md:hover:bg-transparent md:hover:text-#14a2b9 md:p-0"
+                  to="/home"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="block py-2 text-gray-500 rounded md:hover:bg-transparent md:hover:text-#14a2b9 md:p-0"
+                  to="/component-issue"
+                >
+                  Component Issue
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="block py-2 text-gray-500 rounded md:hover:bg-transparent md:hover:text-#14a2b9 md:p-0"
+                  to="/lab-availability"
+                >
+                  Lab Availability
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="block py-2 text-gray-500 rounded md:hover:bg-transparent md:hover:text-#14a2b9 md:p-0"
+                  to="/lab-overview"
+                >
+                  Lab Explore
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="block py-2 text-gray-500 rounded md:hover:bg-transparent md:hover:text-#14a2b9 md:p-0"
+                  to="/request-show"
+                >
+                  My Requests
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="block py-2 text-gray-500 rounded md:hover:bg-transparent md:hover:text-#14a2b9 md:p-0"
+                  to="/complaint"
+                >
+                  Add Complaint
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="block py-2 text-gray-500 rounded md:hover:bg-transparent md:hover:text-#14a2b9 md:p-0"
+                  to="/complaint-review"
+                >
+                  My Complaints
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </header>
+      </nav>
     </>
   );
 }
