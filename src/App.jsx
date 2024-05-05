@@ -25,6 +25,7 @@ import AdminHome from "./components/Faculty/AdminHome";
 import AddSubject from "./components/Faculty/AddSubject";
 import FacultyLogin from "./components/Faculty/FacultyLogin";
 import FacultySignUp from "./components/Faculty/FacultySignUp";
+import RejectedReview from "./components/Faculty/RejectedReview";
 
 function App() {
   return (
@@ -89,6 +90,15 @@ function App() {
             element={
               <AdminElement>
                 <AddComponent />
+              </AdminElement>
+            }
+          />
+          <Route
+            exact
+            path="/deadstock-rejected-review"
+            element={
+              <AdminElement>
+                <RejectedReview />
               </AdminElement>
             }
           />
