@@ -70,11 +70,13 @@ const AdminNavbar = () => {
           }`}
         >
           <ul className="flex flex-col md:flex-row md:space-x-8 md:mt-0">
-            <li>
-              <Link className="nav-link" to="/admin-home">
-                Home
-              </Link>
-            </li>
+            {adminLogin === "chandrasinh.parmar@marwadieducation.edu.in" && (
+              <li>
+                <Link className="nav-link" to="/admin-home">
+                  Approvals
+                </Link>
+              </li>
+            )}
             <li>
               <Link className="nav-link" to="/component-request-review">
                 Issue Request
@@ -105,6 +107,14 @@ const AdminNavbar = () => {
                 <li>
                   <Link className="nav-dropdown-item m-4" to="/dead-stock">
                     DeadStock Overview
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="nav-dropdown-item m-4"
+                    to="/deadstock-rejected-review"
+                  >
+                    Rejected Review
                   </Link>
                 </li>
                 <li>

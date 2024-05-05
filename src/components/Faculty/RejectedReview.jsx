@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AdminNavbar from "./AdminNavbar";
 
-const DeadStock = () => {
+const RejectedReview = () => {
   const [showModal, setShowModal] = useState(false);
+  const [remarkModal, setRemarkModal] = useState(false);
   const [formData, setFormData] = useState({
     deadStockNumber: "",
     description: "",
@@ -13,10 +14,12 @@ const DeadStock = () => {
     rate: "",
     purchaseAmount: "",
     year: "",
-    labNumber: "", // Added labNumber in formData
+    labNumber: "",
+    status: "pending",
   });
   const [editEntry, setEditEntry] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [remark, setRemark] = useState("");
   const authToken = localStorage.getItem("token");
 
   const handleInputChange = (e) => {
@@ -38,10 +41,11 @@ const DeadStock = () => {
           "http://localhost:3000/api/deadstock/getAll",
           options
         );
-        const approvedEntries = response.data.filter(
-          (entry) => entry.status === "approved"
+        const filteredEntries = response.data.filter(
+          (entry) => entry.status === "rejected"
         );
-        setEntries(approvedEntries);
+
+        setEntries(filteredEntries);
       } catch (error) {
         console.error("Error fetching entries:", error);
       }
@@ -76,35 +80,6 @@ const DeadStock = () => {
     return `${year}/${month}/${day}`;
   };
 
-  const handleAddEntry = () => {
-    const dataToSend = {
-      ...formData,
-      email: localStorage.getItem("adminLogin"),
-    };
-
-    axios
-      .post("http://localhost:3000/api/deadstock/add", dataToSend)
-      .then((response) => {
-        console.log("Data added successfully:", response.data);
-        setFormData({
-          deadStockNumber: "",
-          description: "",
-          purchaseDate: "",
-          suppliersName: "",
-          quantity: "",
-          rate: "",
-          purchaseAmount: "",
-          year: "",
-          labNumber: "", // Reset labNumber after adding
-        });
-        setShowModal(false);
-        setEntries([...entries, response.data]);
-      })
-      .catch((error) => {
-        console.error("Error adding data:", error);
-      });
-  };
-
   const handleUpdateEntry = async () => {
     try {
       const response = await axios.put(
@@ -137,73 +112,15 @@ const DeadStock = () => {
     }
   };
 
-  const handleDeleteEntry = (id) => {
-    axios
-      .delete(`http://localhost:3000/api/deadstock/delete/${id}`)
-      .then((response) => {
-        console.log("Entry deleted successfully");
-        setEntries(entries.filter((entry) => entry._id !== id));
-      })
-      .catch((error) => {
-        console.error("Error deleting entry:", error);
-      });
-  };
-
   return (
     <>
       <AdminNavbar />
       {!showModal && (
         <>
-          <h1 className="text-5xl font-bold mt-20 pt-10 mb-2 text-center">
-            Dead Stock Register
-          </h1>
-          <div className="flex items-center justify-between border-b pb-4">
-            <div className="flex items-center ml-8">
-              <label
-                htmlFor="labNumber"
-                className="block text-md font-medium text-gray-700"
-              >
-                Select Lab :
-              </label>
-              <div className="relative ml-2 mt-3">
-                <select
-                  id="labNumber"
-                  name="labNumber"
-                  value={formData.labNumber}
-                  onChange={handleInputChange}
-                  className=" p-2 border border-gray-300 rounded-md appearance-none bg-white text-gray-700 py-1 px-3 pr-8 leading-tight focus:outline-none focus:border-indigo-500"
-                >
-                  <option disabled value="">
-                    Select Lab
-                  </option>
-                  <option value="MA103">MA103</option>
-                  <option value="MA107">MA107</option>
-                  <option value="MA108">MA108</option>
-                  <option value="MA109">MA109</option>
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowModal(true)}
-              className="w-40 mr-8 text-white py-2 px-4 rounded-md shadow-md"
-            >
-              Add Entry +
-            </button>
+          <div className="mt-20 pt-8 text-3xl flex justify-center">
+            <h1> Rejected Entry Review</h1>
           </div>
-          <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+          <div className="absolute top-40 mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <div className="mb-4"></div>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg">
@@ -313,10 +230,13 @@ const DeadStock = () => {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDeleteEntry(entry._id)}
-                            className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-md flex items-center ml-2"
+                            onClick={() => {
+                              setRemark(entry.remark);
+                              setRemarkModal(true);
+                            }}
+                            className="text-white py-2 px-3 ml-2 rounded-md shadow-md flex items-center"
                           >
-                            Delete
+                            Remarks
                           </button>
                         </div>
                       </td>
@@ -402,8 +322,29 @@ const DeadStock = () => {
           </div>
         </div>
       )}
+
+      {remarkModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <div className="text-lg font-semibold mb-4">Remark Of Entry</div>
+            <div className="mb-4">
+              <label className="block text-gray-700">{remark}</label>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => {
+                  setRemarkModal(false);
+                }}
+                className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
-export default DeadStock;
+export default RejectedReview;
