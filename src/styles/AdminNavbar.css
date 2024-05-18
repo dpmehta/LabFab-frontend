@@ -1,0 +1,64 @@
+.admin-list {
+    display: flex;
+    list-style-type: none;
+    width: 40%;
+    height: 30vh;
+    margin: auto;
+    max-width: 1000px;
+    justify-content: space-evenly;
+    text-align: center;
+
+}
+
+.admin-list-items {
+    padding: 1rem 2rem 1.15rem;
+    cursor: pointer;
+    color: #14a2b9;
+    min-width: 80px;
+    margin: auto;
+    font-size: large;
+
+}
+
+.admin-list-items.active {
+    background-image: url('src/assets/pngwing.com.png');
+    background-size: 100% 100%;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 #14a2b9;
+    font-weight: bold;
+}
+
+.admin-list-items:active {
+    transform: translateY(4px);
+}
+
+@keyframes spring {
+    15% {
+        -webkit-transform-origin: center center;
+        -webkit-transform: scale(1.2, 1.1);
+    }
+
+    40% {
+        -webkit-transform-origin: center center;
+        -webkit-transform: scale(0.95, 0.95);
+    }
+
+    75% {
+        -webkit-transform-origin: center center;
+        -webkit-transform: scale(1.05, 1);
+    }
+
+    100% {
+        -webkit-transform-origin: center center;
+        -webkit-transform: scale(1, 1);
+    }
+}
+
+.shameless-plug {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    padding: 8px 20px;
+    color: #ccc;
+    text-decoration: none;
+}
