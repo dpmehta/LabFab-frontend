@@ -13,7 +13,7 @@ const Complaint = () => {
   return (
     <>
       <NavBar />
-      <div className="relative max-w-md mx-auto mt-3">
+      <div className="relative max-w-md mx-auto mt-20 pt-10">
         <div className="overflow-hidden bg-gray-200 pb-3 pr-3 pl-3 shadow-md">
           <div className="flex justify-around">
             {["Component", "Computer(PC)"].map((option) => (
@@ -21,7 +21,7 @@ const Complaint = () => {
                 key={option}
                 className={`w-1/4 py-2 text-center font-medium text-sm ${
                   activeOption === option
-                    ? "text-white bg-blue-500"
+                    ? "text-white"
                     : "text-gray-600 bg-transparent"
                 } focus:outline-none`}
                 onClick={() => handleOptionClick(option)}

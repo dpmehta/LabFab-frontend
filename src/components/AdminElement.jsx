@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import RedirectPage from "./RedirectPage";
 
@@ -12,4 +11,4 @@ const AdminElement = ({ children }) => {
   }
 };
 
-export default AdminElement;
+export default AdminElement;

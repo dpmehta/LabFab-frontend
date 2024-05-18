@@ -15,8 +15,8 @@ const ComplainReview = () => {
   };
   const fetchComponentComplaints = async () => {
     const url = isAdminLoggedIn
-      ? "http://localhost:3000/api/complaints/component-complaint"
-      : "http://localhost:3000/api/complaints/getStudentComplaint";
+      ? "https://labfab.onrender.com/api/complaints/component-complaint"
+      : "https://labfab.onrender.com/api/complaints/getStudentComplaint";
 
     try {
       let response;
@@ -36,8 +36,8 @@ const ComplainReview = () => {
 
   const fetchComputerComplaints = async () => {
     const url = isAdminLoggedIn
-      ? "http://localhost:3000/api/computer-complaints/computer-complaint"
-      : "http://localhost:3000/api/computer-complaints/getStudentComplaint";
+      ? "https://labfab.onrender.com/api/computer-complaints/computer-complaint"
+      : "https://labfab.onrender.com/api/computer-complaints/getStudentComplaint";
     try {
       let response;
       if (isAdminLoggedIn) {
@@ -62,7 +62,7 @@ const ComplainReview = () => {
   const handleResolve = async (id) => {
     try {
       const response = await axios.put(
-        "http://localhost:3000/api/complaints/updateStatus",
+        "https://labfab.onrender.com/api/complaints/updateStatus",
         {
           id: id,
           status: "resolved",
@@ -94,7 +94,7 @@ const ComplainReview = () => {
     <>
       {isAdminLoggedIn ? <AdminNavbar /> : <NavBar />}
 
-      <div className="relative max-w-md mx-auto mt-3">
+      <div className="relative max-w-md mx-auto mt-20 pt-10">
         <div className="overflow-hidden bg-gray-200 pb-3 pr-3 pl-3 shadow-md">
           <div className="flex justify-around">
             {["Component", "Computer(PC)"].map((option) => (
@@ -161,10 +161,7 @@ const ComplainReview = () => {
 
               <div className="p-6 flex justify-end items-center">
                 <img
-                  src={
-                    "http://localhost:5173/@fs/E:/Project-AWT/LabFab/backend/" +
-                    componentComplaint.imageUpload
-                  }
+                  src={`https://labfab.onrender.com${componentComplaint.imageUpload}`}
                   alt="Placeholder"
                   className="h-48 sm:h-64 w-58 sm:w-56 object-cover"
                 />
@@ -220,10 +217,7 @@ const ComplainReview = () => {
 
               <div className="p-6 flex justify-end items-center">
                 <img
-                  src={
-                    "http://localhost:5173/@fs/E:/Project-AWT/LabFab/backend/" +
-                    computerComplaint.imageUpload
-                  }
+                  src={`https://labfab.onrender.com${computerComplaint.imageUpload}`}
                   alt="Placeholder"
                   className="h-48 sm:h-64 w-48 sm:w-56 object-cover"
                 />
