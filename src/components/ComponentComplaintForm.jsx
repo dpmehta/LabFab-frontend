@@ -40,7 +40,7 @@ const ComponentComplaintForm = () => {
 
       // Send formDataToSend to server using fetch or axios
       const response = await fetch(
-        "http://localhost:3000/api/complaints/component-complaint",
+        "https://labfab.onrender.com/api/complaints/component-complaint",
         {
           method: "POST",
           body: formDataToSend,
@@ -162,7 +162,7 @@ const ComponentComplaintForm = () => {
       </div>
       <div className="flex items-center justify-between">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={handleSubmit}
         >
           Submit

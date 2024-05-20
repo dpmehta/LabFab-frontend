@@ -55,7 +55,7 @@ const ComponentIssue = () => {
   const handleSubmit = async () => {
     const grNumber = localStorage.getItem("currentUser");
     const response = await fetch(
-      "http://localhost:3000/api/component/component-issue",
+      "https://labfab.onrender.com/api/component/component-issue",
       {
         method: "POST",
         headers: {
@@ -91,14 +91,25 @@ const ComponentIssue = () => {
       setReturnDate("");
       setPurpose("");
     } else {
-      alert(data.message);
+      const errorMessages = data.errors.map((error) => error.msg);
+      toast.error(`${errorMessages[0]}`, {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+      });
     }
   };
 
   return (
     <>
       <NavBar />
-      <div className="container mx-auto mt-10 mb-5">
+      <div className="container mx-auto mt-20 pt-10 mb-5">
         <div className="max-w-md mx-auto rounded-lg overflow-hidden shadow-lg bg-white">
           <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Component Issue Request</h1>
@@ -168,7 +179,7 @@ const ComponentIssue = () => {
             </div>
             <button
               onClick={handleSubmit}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+              className="w-full  text-white py-2 rounded-lg  transition duration-300"
             >
               Submit
             </button>
