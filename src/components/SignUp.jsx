@@ -30,21 +30,37 @@ const SignUp = () => {
       return;
     }
 
-    const response = await fetch("http://localhost:3000/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        grNumber: grNumber,
-        password: password,
-      }),
-    });
+    const response = await fetch(
+      "https://labfab.onrender.com/api/auth/signup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          grNumber: grNumber,
+          password: password,
+        }),
+      }
+    );
 
     const json = await response.json();
     if (json.success) {
       localStorage.setItem("token", json.token);
       navigate("/login");
+    } else if (response.status === 404) {
+      const errorMessage = response.message;
+      toast.error(errorMessage, {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+      });
     } else {
       const errorMessages = json.errors.map((error) => error.msg);
       toast.error(`${errorMessages[0]}`, {

@@ -11,7 +11,7 @@ const RequestShow = () => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/component/component-issues",
+          "https://labfab.onrender.com/api/component/component-issues",
           {
             grNumber: localStorage.getItem("currentUser"),
           }
@@ -38,7 +38,7 @@ const RequestShow = () => {
   return (
     <>
       <NavBar />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-20">
         <div className="overflow-x-auto">
           <table className="w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
