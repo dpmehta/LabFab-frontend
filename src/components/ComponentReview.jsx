@@ -12,7 +12,7 @@ const ComponentReview = () => {
     const fetchComponentIssues = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/component/component-issues"
+          "https://labfab.onrender.com/api/component/component-issues"
         );
         setComponentIssues(response.data.componentIssues);
         console.log(response.data.componentIssues);
@@ -45,7 +45,7 @@ const ComponentReview = () => {
       updatedIssues[index].status = "approved";
       setFilteredIssues(updatedIssues);
       await axios.put(
-        `http://localhost:3000/api/component/component-issues/${updatedIssues[index]._id}`,
+        `https://labfab.onrender.com/api/component/component-issues/${updatedIssues[index]._id}`,
         { status: "approved" }
       );
       // Display success toast
@@ -60,7 +60,7 @@ const ComponentReview = () => {
       updatedIssues[index].status = "rejected";
       setFilteredIssues(updatedIssues);
       await axios.put(
-        `http://localhost:3000/api/component/component-issues/${updatedIssues[index]._id}`,
+        `https://labfab.onrender.com/api/component/component-issues/${updatedIssues[index]._id}`,
         { status: "rejected" }
       );
     } catch (error) {
