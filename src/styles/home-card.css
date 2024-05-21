@@ -82,12 +82,20 @@
     border-radius: 8px;
     background: transparent;
     border: 1px solid #777;
-    color: #777;
     margin-right: 15px;
+    color: #000;
+    transition: color 0.3s; /* Add transition for color change */
+}
+
+.card__button:hover {
+    color: white; /* Change text color to white on hover */
 }
 
 .secondary {
     background: transparent;
-    color: #777;
     border: 1px solid #777;
+}
+
+.secondary:hover {
+    color: white; /* Change text color to white on hover */
 }
