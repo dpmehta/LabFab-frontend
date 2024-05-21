@@ -14,7 +14,7 @@ const LabAvailability = () => {
     const labCode = code;
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/lab-entries/activeStudentsCount",
+        "https://labfab.onrender.com/api/lab-entries/activeStudentsCount",
         { labCode }
       );
       setActiveCount(response.data.activeStudentsCount);
@@ -26,7 +26,11 @@ const LabAvailability = () => {
   return (
     <>
       <NavBar />
-      <div>
+      <div className="mt-20">
+        <div className="text-3xl font-semibold mt-20 pt-10 text-center">
+          Check Lab Availability
+        </div>
+
         <div className="card-list">
           <a
             href="#"
@@ -39,10 +43,10 @@ const LabAvailability = () => {
           <a
             href="#"
             className="card-item"
-            onClick={() => handleCardClick("MA113", "Designer Lab")}
+            onClick={() => handleCardClick("MA102", "Programming Lab")}
           >
-            <h2>MA113</h2>
-            <h3>Designer Lab</h3>
+            <h2>MA102</h2>
+            <h3>Programming Lab</h3>
           </a>
           <a
             href="#"
@@ -55,23 +59,23 @@ const LabAvailability = () => {
           <a
             href="#"
             className="card-item"
-            onClick={() => handleCardClick("MA109", "Electronics Lab")}
+            onClick={() => handleCardClick("MA109", "Communication & IoT Lab")}
           >
             <h2>MA109</h2>
-            <h3>Electronics Lab</h3>
+            <h3>Communication & IoT Lab</h3>
           </a>
           <a
             href="#"
             className="card-item"
-            onClick={() => handleCardClick("MA108", "Communication Lab")}
+            onClick={() => handleCardClick("MA108", "Project Lab")}
           >
             <h2>MA108</h2>
-            <h3>Communication Lab</h3>
+            <h3>Project Lab</h3>
           </a>
           <a
             href="#"
             className="card-item"
-            onClick={() => handleCardClick("MA107", "Robotics Lab")}
+            onClick={() => handleCardClick("MA107", "Embedded Lab")}
           >
             <h2>MA107</h2>
             <h3>Robotics Lab</h3>

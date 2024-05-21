@@ -84,7 +84,7 @@ const LabDetail = () => {
                   <p className="text-gray-600 mb-4">
                     Semester: {subject.semester}
                   </p>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                  <button className="text-white py-2 px-4 rounded">
                     View Details
                   </button>
                 </div>
