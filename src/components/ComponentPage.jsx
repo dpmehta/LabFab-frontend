@@ -11,17 +11,6 @@ const ComponentPage = () => {
     setIsChecked(!isChecked);
   };
 
-  function getEncodedIdFromUrl() {
-    const urlParts = window.location.href.split("/");
-    return urlParts[urlParts.length - 1];
-  }
-  function decodeId(encodedId) {
-    return atob(encodedId);
-  }
-  const encodedId = getEncodedIdFromUrl();
-
-  const ids = decodeId(encodedId);
-  console.log("Decoded ID:", ids);
   const [cardDetails, setCardDetails] = useState(null); // State to store card details
   const db = getFirestore(); // Initialize Firestore
 
@@ -29,7 +18,7 @@ const ComponentPage = () => {
     // Function to fetch card details from Firestore
     const fetchCardDetails = async () => {
       try {
-        const docRef = doc(db, "resource-details", ids); // Reference to the document with the provided ID
+        const docRef = doc(db, "resource-details", id); // Reference to the document with the provided ID
         const docSnap = await getDoc(docRef); // Get the document snapshot
         if (docSnap.exists()) {
           setCardDetails(docSnap.data());
@@ -69,29 +58,39 @@ const ComponentPage = () => {
                   <span className="value">{cardDetails.timing}</span>
                 </div>
               </div>
-              <a
-                href={cardDetails["video-link"]}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <button type="button" className="btn btn-info">
-                  Watch Video
-                </button>
-              </a>
               <Link
                 to={`/component-issue?componentName=${encodeURIComponent(
                   cardDetails.name
                 )}`}
               >
-                <button type="button" className="btn btn-info ml-3">
+                <button
+                  type="button"
+                  style={{
+                    backgroundColor: "#14a2b9",
+                    width: "40%",
+                    marginRight: "4px",
+                  }}
+                >
                   Issue this Component
                 </button>
               </Link>
+              <a
+                href={cardDetails["video-link"]}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button
+                  type="button"
+                  style={{ backgroundColor: "#14a2b9", width: "30%" }}
+                >
+                  Watch Video
+                </button>
+              </a>
             </div>
             <div className="col-lg-6">
               <div className="about-avatar">
                 <img
-                  src={"http://localhost:5173/src/" + cardDetails.imagePath}
+                  src={"/" + cardDetails.imagePath}
                   title="avatar"
                   alt="avatar"
                 />
