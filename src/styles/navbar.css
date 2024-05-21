@@ -1,5 +1,5 @@
 /* navbar.css */
-.nav li {
+.ul li {
   padding: 1rem;
   /* Equivalent to p-4 in Tailwind CSS */
   border-bottom: 2px solid transparent;
@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-.nav li:hover {
+.ul li:hover {
   border-color: #14a2b9;
   color: #14a2b9;
 }
