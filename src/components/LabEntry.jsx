@@ -12,7 +12,7 @@ const LabEntry = () => {
   const qrBoxEl = useRef(null);
   const [qrOn, setQrOn] = useState(true);
   const labNumber = localStorage.getItem("labNumber");
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const [scannedResult, setScannedResult] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -29,7 +29,7 @@ const LabEntry = () => {
     setScannedResult(grNumber);
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/lab-entries/check",
+        "https://labfab.onrender.com/api/lab-entries/check",
         { grNumber }
       );
       decideFlag = response.data.exists;
@@ -57,7 +57,7 @@ const LabEntry = () => {
   const handleLeaveLab = async () => {
     try {
       const response = await axios.put(
-        "http://localhost:3000/api/lab-entries//lab-leave",
+        "https://labfab.onrender.com/api/lab-entries//lab-leave",
         {
           grNumber: scannedResult,
         }
@@ -116,7 +116,7 @@ const LabEntry = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/lab-entries/add-entry",
+        "https://labfab.onrender.com/api/lab-entries/add-entry",
         {
           grNumber: scannedResult,
           entryTime: new Date().toISOString(),
@@ -151,28 +151,31 @@ const LabEntry = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("labNumber");
-    naviagte("/");
+    localStorage.removeItem("adminLogin");
+    navigate("/");
   };
 
   return (
     <>
-      <div className="bg-blue-300 h-screen flex flex-col justify-center items-center text-white">
+      <div className="bg-blue-50 h-screen flex flex-col justify-center items-center text-blue">
         <h1 className="m-0 py-2 lab-entry-heading text-center">
           Welcome To ICT MU Labs
         </h1>
-        <div className="flex justify-between w-full px-4">
+        <div className="flex flex-col items-center">
           <h2 className="text-2xl text-center mb-0">
             Scan ID Card To Add Your Lab Entry
           </h2>
-          {labNumber && (
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="btn btn-info mb-3"
-            >
-              Logout
-            </button>
-          )}
+          <div className="flex justify-between w-full px-4">
+            {labNumber && (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="text-white font-bold py-2 px-4 rounded w-24 absolute top-4 right-4 mr-4"
+              >
+                Logout
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="qr-reader ">

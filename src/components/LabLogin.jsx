@@ -21,7 +21,7 @@ const LabLogin = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/lablogin/verify",
+        "https://labfab.onrender.com/api/lablogin/verify",
         {
           adminId: adminId,
           labNumber: labNumber,
@@ -43,6 +43,7 @@ const LabLogin = () => {
           },
         });
         localStorage.setItem("labNumber", labNumber);
+        localStorage.setItem("adminLogin", "labLoginSuccessful");
         navigate("/lab-entry");
       } else {
         toast.error("Login failed", {
