@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RedirectPage = () => {
@@ -8,9 +8,9 @@ const RedirectPage = () => {
   }, []);
   return (
     <>
-      <h1> You don't have access to this page</h1>
+      <h1> You dont have access to this page</h1>
     </>
   );
 };
 
-export default RedirectPage;
+export default RedirectPage;

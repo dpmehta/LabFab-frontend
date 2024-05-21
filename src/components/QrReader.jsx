@@ -60,13 +60,17 @@ const QrReader = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ grNumber: scannedResult, password: password }),
-      });
+      const response = await fetch(
+        "https://labfab.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ grNumber: scannedResult, password: password }),
+        }
+      );
 
       const data = await response.json();
+      console.log(data.error);
 
       if (data.success) {
         localStorage.setItem("currentUser", data.currentUser.gr_no);
@@ -84,7 +88,7 @@ const QrReader = () => {
         });
         navigate("/home");
       } else {
-        toast.error(" Invalid QR code ", {
+        toast.error(" Invalid Credential ", {
           style: {
             border: "1px solid #713200",
             padding: "16px",
@@ -153,7 +157,12 @@ const QrReader = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleLogin}>Login</button>
+            <button
+              onClick={handleLogin}
+              style={{ backgroundColor: "#14a2b9" }}
+            >
+              Login
+            </button>
           </div>
         </div>
       )}
