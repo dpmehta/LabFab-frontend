@@ -48,7 +48,7 @@ const DropDown = ({ label, options, onChange }) => {
           {options.map((option, index) => (
             <button
               key={index}
-              className="flex block rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer mt-1"
+              className="flex block rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer mt-1"
               onClick={() => handleOptionChange(option)}
             >
               {option.label}

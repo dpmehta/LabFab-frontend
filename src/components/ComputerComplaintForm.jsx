@@ -34,7 +34,7 @@ const ComputerComplaintForm = () => {
       formDataToSend.append("grNumber", studentToken);
 
       const response = await fetch(
-        "http://localhost:3000/api/computer-complaints/add-complaint",
+        "https://labfab.onrender.com/api/computer-complaints/add-complaint",
         {
           method: "POST",
           body: formDataToSend,
@@ -137,7 +137,7 @@ const ComputerComplaintForm = () => {
       </div>
       <div className="flex items-center justify-between">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={handleSubmit}
         >
           Submit
