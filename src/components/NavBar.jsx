@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
-import MuLogo from "../assets/images/mu-logo.png";
-import IctLogo from "../assets/images/ictlogo.png";
+import MuLogo from "../assets/logos/mu-logo.png";
+import IctLogo from "../assets/logos/mu-logo.png";
+import LabFabLogo from "../assets/LabFabImage.png";
 import { useState } from "react";
 
 export default function NavBar() {
@@ -20,28 +21,24 @@ export default function NavBar() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
   return (
     <>
       <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-space ml-20">
-            <img src={MuLogo} className="h-12 mr-2" alt="MuLogo" />
-            <img
-              src={IctLogo}
-              alt="ICT"
-              id="ict-logo"
-            />
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-space ml-40">
+          <img src={LabFabLogo} className="h-20" alt="MuLogo" />
+
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             {isLoggedIn && (
               <button
                 type="button"
-                className="text-white  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mb-4"
+                className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mb-4"
                 onClick={handleLogout}
               >
                 Logout
               </button>
             )}
-           
+            {/* <img src={MuLogo} alt="ICT" id="ict-logo" /> */}
             <button
               type="button"
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"

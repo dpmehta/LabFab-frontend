@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import "../styles/login.css";
-import toast from "react-hot-toast";
-import LabLogin from "./LabLogin";
 
 const LoginPage = () => {
   const [role, setRole] = useState("");
@@ -79,12 +77,15 @@ const LoginPage = () => {
             </button>
           )}
           {(role === "student" || role === "faculty") && (
-            <div className="login-google">
-              <GoogleLogin
-                onSuccess={handleLoginSuccess}
-                onError={handleLoginError}
-              />
-            </div>
+            <>
+              <p className="text-2xl text-center mt-3"> OR </p>
+              <div className="mt-3 flex justify-center">
+                <GoogleLogin
+                  onSuccess={handleLoginSuccess}
+                  onError={handleLoginError}
+                />
+              </div>
+            </>
           )}
         </div>
       </form>
