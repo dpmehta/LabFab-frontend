@@ -35,7 +35,7 @@ const DeadStock = () => {
       };
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/deadstock/getAll",
+          "https://labfab.onrender.com/api/deadstock/getAll",
           options
         );
         const approvedEntries = response.data.filter(
@@ -83,7 +83,7 @@ const DeadStock = () => {
     };
 
     axios
-      .post("http://localhost:3000/api/deadstock/add", dataToSend)
+      .post("https://labfab.onrender.com/api/deadstock/add", dataToSend)
       .then((response) => {
         console.log("Data added successfully:", response.data);
         setFormData({
@@ -108,7 +108,7 @@ const DeadStock = () => {
   const handleUpdateEntry = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/deadstock/update/${editEntry._id}`,
+        `https://labfab.onrender.com/api/deadstock/update/${editEntry._id}`,
         formData
       );
       console.log("Entry updated successfully:", response.data);
@@ -139,7 +139,7 @@ const DeadStock = () => {
 
   const handleDeleteEntry = (id) => {
     axios
-      .delete(`http://localhost:3000/api/deadstock/delete/${id}`)
+      .delete(`https://labfab.onrender.com/api/deadstock/delete/${id}`)
       .then((response) => {
         console.log("Entry deleted successfully");
         setEntries(entries.filter((entry) => entry._id !== id));
