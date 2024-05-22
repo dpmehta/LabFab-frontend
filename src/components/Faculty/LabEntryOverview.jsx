@@ -10,7 +10,7 @@ const LabEntryOverview = () => {
   const fetchLabEntries = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/lab-entries/getAll"
+        "https://labfab.onrender.com/api/lab-entries/getAll"
       );
       setLabEntries(response.data.labEntries);
     } catch (error) {
@@ -19,7 +19,6 @@ const LabEntryOverview = () => {
   };
 
   useEffect(() => {
-    console.log("hu devlo " + searchLabNumber);
     fetchLabEntries();
   }, []);
 
@@ -74,9 +73,9 @@ const LabEntryOverview = () => {
   return (
     <>
       <AdminNavbar />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="overflow-x-auto">
-          <table className="w-full divide-y divide-gray-200">
+      <div className="max-w-7xl mx-auto my-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="">
+          <table className="w-full divide-y divide-gray-200 mt-20">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">

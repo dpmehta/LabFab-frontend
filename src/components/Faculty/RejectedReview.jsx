@@ -38,7 +38,7 @@ const RejectedReview = () => {
       };
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/deadstock/getAll",
+          "https://labfab.onrender.com/api/deadstock/getAll",
           options
         );
         const filteredEntries = response.data.filter(
@@ -83,7 +83,7 @@ const RejectedReview = () => {
   const handleUpdateEntry = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/deadstock/update/${editEntry._id}`,
+        `https://labfab.onrender.com/api/deadstock/update/${editEntry._id}`,
         formData
       );
       console.log("Entry updated successfully:", response.data);
