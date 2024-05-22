@@ -35,7 +35,7 @@ const FacultyLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/faculty/login",
+        "https://labfab.onrender.com/api/faculty/login",
         {
           email: email,
           password: password,
