@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MuLogo from "../../assets/images/mu-logo.png";
-import IctLogo from "../../assets/images/ictlogo.png";
+import MuLogo from "../../assets/logos/mu-logo.png";
+import IctLogo from "../../assets/logos/ictlogo.png";
 
 const AdminNavbar = () => {
   const adminLogin = localStorage.getItem("adminLogin");

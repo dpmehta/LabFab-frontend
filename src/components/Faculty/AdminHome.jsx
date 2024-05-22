@@ -20,7 +20,7 @@ const AdminHome = () => {
         },
       };
       const response = await axios.post(
-        "http://localhost:3000/api/deadstock/filterByStatus",
+        "https://labfab.onrender.com/api/deadstock/filterByStatus",
         {
           status: status,
         },
@@ -52,7 +52,7 @@ const AdminHome = () => {
         },
       };
       const response = await axios.put(
-        "http://localhost:3000/api/deadstock/updateRemark",
+        "https://labfab.onrender.com/api/deadstock/updateRemark",
         {
           remark: remark,
           id: remarkEntryId,
@@ -97,7 +97,7 @@ const AdminHome = () => {
         },
       };
       const response = await axios.put(
-        "http://localhost:3000/api/deadstock/updateStatus",
+        "https://labfab.onrender.com/api/deadstock/updateStatus",
         {
           status: "approved",
           id: entryId,
